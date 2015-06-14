@@ -24,7 +24,7 @@ private slots:
 
 private:
     Ui::MainWindow *ui;
-    double scale;
+    double currentScale, scaleMin, scaleFactor;
 };
 
 #endif // MAINWINDOW_H

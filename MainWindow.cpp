@@ -7,7 +7,9 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    scale = 1;
+    currentScale = 1;
+    scaleFactor = 1.1;
+    scaleMin = .1;
 }
 
 MainWindow::~MainWindow()
@@ -33,19 +35,19 @@ void MainWindow::on_pushButton_clicked()
     texto->setPlainText("Nodo X");
     scene->addItem(texto);
     ui->painter->setScene(scene);
-    ui->painter->scale(scale,scale);
+    ui->painter->scale(currentScale,currentScale);
 }
 
 void MainWindow::on_pushButton_2_clicked()//+
 {
-    scale*=1.1;
-    ui->painter->scale(1.1,1.1);
+    currentScale*=scaleFactor;
+    ui->painter->scale(scaleFactor,scaleFactor);
 }
 
 void MainWindow::on_pushButton_3_clicked()//-
 {
-    if(scale>1){
-        scale/=1.1;
-        ui->painter->scale(1/1.1,1/1.1);
+    if(currentScale>scaleMin){
+        currentScale/=scaleFactor;
+        ui->painter->scale(1/scaleFactor,1/scaleFactor);
     }
 }
