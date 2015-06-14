@@ -18,8 +18,13 @@ public:
 private slots:
     void on_pushButton_clicked();
 
+    void on_pushButton_2_clicked();
+
+    void on_pushButton_3_clicked();
+
 private:
     Ui::MainWindow *ui;
+    double scale;
 };
 
 #endif // MAINWINDOW_H
