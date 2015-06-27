@@ -1,11 +1,13 @@
 #include "MainWindow.h"
 #include "ui_MainWindow.h"
-#include <QGraphicsTextItem>
+
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
+    scene = new QGraphicsScene;
+    Nodo1 = new QGraphicsItemGroup();
     ui->setupUi(this);
     currentScale = 1;
     scaleFactor = 1.1;
@@ -19,21 +21,31 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_pushButton_clicked()
 {
-    QGraphicsScene *scene = new QGraphicsScene;
-    QGraphicsEllipseItem *ellipse;
+
+    QGraphicsEllipseItem *ellipse2;
     QGraphicsTextItem *texto;
 
     QBrush redBrush(Qt::red);
-    QBrush blueBrush(Qt::blue);
+    //QBrush blueBrush(Qt::blue);
     QPen blackPen(Qt::black);
     blackPen.setWidth(1);
 
-    scene->addEllipse(0, 10, 100, 100, blackPen, redBrush);
-    scene->addEllipse(500, 10, 100, 100, blackPen, redBrush);
+    ellipse1 = scene->addEllipse(0, 10, 100, 100, blackPen, redBrush);
+    ellipse2 = scene->addEllipse(500, 10, 100, 100, blackPen, redBrush);
+    ellipse1->setAcceptDrops(true);
+    ellipse2->setAcceptDrops(true);
+    ellipse1->setFlag(QGraphicsItem::ItemIsMovable, true);
+
     texto = new QGraphicsTextItem();
-    texto->setPos(100,100);
+    texto->setPos(0,50);
     texto->setPlainText("Nodo X");
-    scene->addItem(texto);
+    Nodo1->addToGroup(ellipse1);
+    Nodo1->addToGroup(texto);
+    Nodo1->setAcceptDrops(true);
+    Nodo1->setFlag(QGraphicsItem::ItemIsMovable, true);
+
+    scene->addItem(Nodo1);
+    ui->painter->setAcceptDrops(true);
     ui->painter->setScene(scene);
     ui->painter->scale(currentScale,currentScale);
 }
@@ -50,4 +62,9 @@ void MainWindow::on_pushButton_3_clicked()//-
         currentScale/=scaleFactor;
         ui->painter->scale(1/scaleFactor,1/scaleFactor);
     }
+}
+
+void MainWindow::on_pushButton_4_clicked()
+{
+    cout<<Nodo1->pos().x()<<" , "<<Nodo1->pos().y()<<endl;
 }
